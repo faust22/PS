@@ -1,2 +1,3 @@
 Get-Content input.txt | .\main.exe > output.txt
+Get-Content input.txt | ./exes/17131.exe > output.txt
 #define FASTIO cin.tie(0);cout.tie(0);ios_base::sync_with_stdio(false)

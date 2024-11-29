@@ -1,0 +1,1 @@
+https://usaco.guide/adv/count-min?lang=cpp : segment tree with counting minimums

@@ -93,20 +93,19 @@ int main(){
         int zip_x = x_zip[x];
         if (y!=prev_y) {
             for(int j = 0; j < update_list.size(); ++j){
+                //cout << "updating " << update_list[j] << endl;
                 t.update(1,0,x_coord.size()-1, update_list[j], 1);
             }
+            update_list.clear();
             prev_y = y;
         }
-        else {
-            update_list.push_back(zip_x);
-        }
+        update_list.push_back(zip_x);
+        //cout << "pushed " << zip_x << " at y = " << y << endl;
         //t.update(1, 0, x_coord.size()-1, zip_x, 1);
         TYPE debug = (t.query(1, 0, x_coord.size()-1, 0, zip_x - 1) * t.query(1, 0, x_coord.size()-1, zip_x+1, x_coord.size()-1)); 
         //cout << t.query(1, 0, x_coord.size()-1, 0, zip_x - 1) << ' ' << t.query(1, 0, x_coord.size()-1, zip_x+1, x_coord.size()-1) << endl;
         res += debug;
         res %= PRIME;
-        
-        
     }
     cout << res << endl;
     return 0;
