@@ -19,6 +19,8 @@ struct lazy_segtree {
         return (end-start+1)*diff;
     }//this is applying interval delayed value
     void update_lazy(int node, int start, int end){
+        // must do
+        // 1. clear lazy
         if (lazy[node] != 0) {
             v[node] = f(v[node], l_f(start, end, lazy[node]));
             if (start!=end){
@@ -29,17 +31,21 @@ struct lazy_segtree {
         }
     } // update_lazy guarantees The node has no lazy evaluation so you can use v[node] without doubt
     void update_range(int node, int start, int end, int left, int right, int diff){
-        update_lazy(node, start, end);
+        // must do
+        // 1. clear lazy(propagate) & calc lazy
+        // 2. calc v[node]
+        // 3. recursively pass update
+        update_lazy(node, start, end); // 1. clear lazy
         if (end<left || right<start) return;
         if (left <= start && end <= right){
-            v[node] = f(v[node], l_f(start, end, diff));
+            v[node] = f(v[node], l_f(start, end, diff)); // 2. calc v[node]
             if (start!=end){
-                lazy[2*node] = f(lazy[2*node], diff);
+                lazy[2*node] = f(lazy[2*node], diff); // 1-1. calc lazy
                 lazy[2*node+1] = f(lazy[2*node+1], diff);
             }
             return;
         }
-        update_range(2*node, start, (start+end)/2, left, right, diff);
+        update_range(2*node, start, (start+end)/2, left, right, diff); // 3. update pass
         update_range(2*node+1, 1+(start+end)/2, end, left, right, diff);
     }
     TYPE query(int node, int start, int end, int left, int right){
